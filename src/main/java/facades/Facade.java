@@ -1,5 +1,8 @@
 package facades;
 
+import dtos.*;
+import entities.*;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -23,6 +26,125 @@ public class Facade {
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+
+    public List<ToDoListDTO> getAllUsersToDoLists(){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<ToDoList> query = em.createQuery("SELECT t FROM ToDoList t", ToDoList.class);
+            List<ToDoList> toDoLists = query.getResultList();
+            List<ToDoListDTO> tdldtos = ToDoListDTO.getDtos(toDoLists);
+            return tdldtos;
+        }finally {
+            em.close();
+        }
+    }
+
+    public List<PackingListDTO> getAllUsersPackingLists(){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<PackingList> query = em.createQuery("SELECT p FROM PackingList p", PackingList.class);
+            List<PackingList> packingLists = query.getResultList();
+            List<PackingListDTO> pldtos = PackingListDTO.getDtos(packingLists);
+            return pldtos;
+        }finally {
+            em.close();
+        }
+    }
+
+    public PackingListDTO getAPackingListsById(int id){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            PackingList p = em.find(PackingList.class, id);
+            return new PackingListDTO(p);
+        }finally {
+            em.close();
+        }
+    }
+
+    public ToDoListDTO getAToDoListsById(int id){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            ToDoList t = em.find(ToDoList.class, id);
+            return new ToDoListDTO(t);
+        }finally {
+            em.close();
+        }
+    }
+
+    public PackingListDTO getAPackingListsByName(String name){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<PackingList> query = em.createQuery("SELECT p FROM PackingList p WHERE p.listName = :packingListName", PackingList.class);
+            query.setParameter("packingListName", name);
+            PackingList pl = query.getSingleResult();
+            return new PackingListDTO(pl);
+        }finally {
+            em.close();
+        }
+    }
+
+    public ToDoListDTO getAToDoListsByName(String name){
+        //this function has not been tested
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<ToDoList> query = em.createQuery("SELECT t FROM ToDoList t WHERE t.listName = :toDoListName", ToDoList.class);
+            query.setParameter("toDoListName", name);
+            ToDoList tdl = query.getSingleResult();
+            return new ToDoListDTO(tdl);
+        }finally {
+            em.close();
+        }
+    }
+
+    /*
+    public String checkUncheckById(int id){}
+
+    public String makeOrRemoveTemplate(int id){}
+
+    public PackingListDTO makePakingList(PackingList p){}
+
+    public ToDoListDTO makeToDoList(ToDoList t){}
+
+    public UserDTO makeUser(User u){}
+
+    public PackingListItemDTO makePackingListItem(PackingListItem pi){}
+
+    public ToDoListItemDTO makeToDoListItem(ToDoListItem tdi){}
+
+    public List<User> getAllUsers(){}
+
+    public User makeUser(){}
+
+    public PackingListDTO makePackingList(){}
+
+    public ToDoListDTO makeToDoList(){}
+
+    public PackingListDTO changePackingList(){}
+
+    public ToDoListDTO changeToDoList(){}
+
+    public UserDTO makeUser(){}
+
+    public UserDTO changeUser(){}
+
+    public PackingListItemDTO addToPackingList(){}
+
+    public ToDoListItemDTO addToToDoList(){}
+
+    public PackingListDTO dublicatePackingList(){}
+
+    public ToDoListDTO dublicateToDoList(){}
+
+    public PackingListDTO uncheckAllInPackingList(){}
+
+    public ToDoListDTO uncheckAllInToDoList(){}
+
+    */
 /*
     public ManySideDTO create(ManySide newManySide){
         EntityManager em = emf.createEntityManager();

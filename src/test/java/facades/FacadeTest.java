@@ -1,6 +1,5 @@
 //package facades;
 //
-//import dtos.ManySideDTO;
 //import entities.*;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,6 @@
 //        try {
 //            em.getTransaction().begin();
 //            em.createQuery("DELETE FROM User u").executeUpdate();
-//            em.createQuery("DELETE FROM Role r").executeUpdate();
 //            em.createNamedQuery("ManySide.deleteAllRows").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE ManySide AUTO_INCREMENT = 1").executeUpdate();
 //            em.createNamedQuery("OneSide.deleteAllRows").executeUpdate();
